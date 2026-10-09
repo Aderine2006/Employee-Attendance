@@ -1,0 +1,7 @@
+# Design decisions
+
+1. **Indexes.** A unique `employees.emp_code` index enforces the business key. Department/code supports employee listing; department/join date and join date/department support headcount lookup with or without a department filter. Unique (`attendance_logs.emp_code`, `date`) prevents duplicate daily records and supports employee-month queries. Date-descending/employee/status supports sorted attendance listing and date-range analytics. I avoided a standalone status index because status is low-cardinality.
+2. **Punch-in races.** Both requests may pass the preliminary existence check, but only one insert can satisfy the unique attendance key. MongoDB raises `DuplicateKeyError` for the other request, which the API returns as 409.
+3. **Ties.** The aggregation ranks only by total late minutes, then sorts returned rows by employee code. Equal totals share a competition rank, and every employee whose rank is at most `limit` is returned, even if that exceeds the row limit.
+4. **Headcount.** Department summary starts with employees whose `joined_on` precedes the next month, then looks up that employee’s logs. An employee with no logs still contributes one to headcount and zero to the metrics.
+5. **At 100x scale.** I would measure the explain plans on representative data, then tune compound indexes and move analytics workloads to pre-aggregated daily summaries if query latency required it.
