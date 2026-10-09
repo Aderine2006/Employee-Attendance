@@ -5,6 +5,7 @@ from typing import Any, Optional
 from app.core.time import parse_ymd
 from app.db.mongo import db
 
+
 def department_summary_pipeline(start_str: str, end_str: str, department: Optional[str] = None) -> list[dict[str, Any]]:
     employee_match: dict[str, Any] = {"joined_on": {"$lt": end_str}}
     if department is not None:

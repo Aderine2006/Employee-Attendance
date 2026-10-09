@@ -6,10 +6,16 @@ from fastapi import APIRouter, HTTPException, Query, status
 
 from app.core.time import parse_ymd
 from app.db.mongo import db
-from app.services.analytics import department_summary_pipeline, department_trend_pipeline, explain_aggregation, late_leaderboard_pipeline
+from app.services.analytics import (
+    department_summary_pipeline,
+    department_trend_pipeline,
+    explain_aggregation,
+    late_leaderboard_pipeline,
+)
 from app.services.attendance import employee_monthly_pipeline, month_bounds, validate_calendar_date
 
 router = APIRouter(tags=["admin"])
+
 
 @router.get("/admin/explain/{endpoint}")
 def explain_endpoint(

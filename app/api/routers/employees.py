@@ -11,6 +11,7 @@ from app.services.serialization import serialize_employee
 
 router = APIRouter(tags=["employees"])
 
+
 @router.post("/employees", status_code=status.HTTP_201_CREATED)
 def create_employee(payload: EmployeeCreate):
     existing = db.employees.find_one({"emp_code": payload.emp_code})

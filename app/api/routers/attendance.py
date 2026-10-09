@@ -5,13 +5,22 @@ from typing import Any, Literal, Optional
 from fastapi import APIRouter, HTTPException, Query, status
 from pymongo.errors import DuplicateKeyError
 
-from app.core.time import attendance_date_for_instant, compute_late_minutes, dt_from_epoch, ensure_utc, recompute_derived_fields, truncate_seconds
+from app.core.time import (
+    attendance_date_for_instant,
+    compute_late_minutes,
+    dt_from_epoch,
+    ensure_utc,
+    epoch_ms,
+    recompute_derived_fields,
+    truncate_seconds,
+)
 from app.db.mongo import db
 from app.models.schemas import PunchInRequest, PunchOutRequest, RegularizeRequest
 from app.services.attendance import fetch_employee_or_404, record_version_filter, validate_calendar_date
 from app.services.serialization import serialize_attendance
 
 router = APIRouter(tags=["attendance"])
+
 
 @router.post("/attendance/punch-in", status_code=status.HTTP_201_CREATED)
 def punch_in(payload: PunchInRequest):

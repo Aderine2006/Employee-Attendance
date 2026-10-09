@@ -6,6 +6,7 @@ from typing import Any, Optional
 IST = timezone(timedelta(hours=5, minutes=30))
 PRESENCE_STATUSES = {"PRESENT", "WFH", "ON_DUTY"}
 
+
 def ensure_utc(dt: Optional[datetime]) -> Optional[datetime]:
     if dt is None:
         return None

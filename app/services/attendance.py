@@ -8,6 +8,7 @@ from fastapi import HTTPException, status
 from app.core.time import parse_ymd, round_half_up
 from app.db.mongo import db
 
+
 def fetch_employee_or_404(emp_code: str) -> dict[str, Any]:
     employee = db.employees.find_one({"emp_code": emp_code})
     if employee is None:

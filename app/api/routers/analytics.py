@@ -6,10 +6,15 @@ from fastapi import APIRouter, HTTPException, Query, status
 
 from app.core.time import parse_ymd, round_half_up
 from app.db.mongo import db
-from app.services.analytics import department_summary_pipeline, department_trend_pipeline, late_leaderboard_pipeline
+from app.services.analytics import (
+    department_summary_pipeline,
+    department_trend_pipeline,
+    late_leaderboard_pipeline,
+)
 from app.services.attendance import fetch_employee_or_404, month_bounds, month_user_summary
 
 router = APIRouter(tags=["analytics"])
+
 
 @router.get("/analytics/employees/{emp_code}/monthly")
 def employee_monthly(emp_code: str, month: str = Query(..., pattern=r"^\d{4}-(0[1-9]|1[0-2])$")):

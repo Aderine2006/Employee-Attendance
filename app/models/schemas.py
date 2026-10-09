@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 
 from app.core.time import parse_ymd
 
+
 class EmployeeCreate(BaseModel):
     emp_code: str
     name: str = Field(..., min_length=1, max_length=100)
